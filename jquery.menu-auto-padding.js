@@ -26,12 +26,10 @@
 		if(options) $.extend(settings,options);
 		
 		return this.each(function(){
-			//var elements = $(this).children(settings.firstChild).children(settings.secondChild);
 			var elements = $(this).find(settings.elementsSelector);
 			var elementsWidth = 0;
 			
 			elements.each(function(){
-				//elementsWidth += $(this).width();
 				elementsWidth += $(this).outerWidth(true);
 			});
 			
