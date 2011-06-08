@@ -24,20 +24,19 @@
 			separatorWidth			:	0
 		};
 		if(options) $.extend(settings,options);
-		
 		return this.each(function(){
 			var elements = $(this).find(settings.elementsSelector);
 			var elementsWidth = 0;
 			
 			elements.each(function(){
-				elementsWidth += $(this).outerWidth(true);
+				elementsWidth += $(this).outerWidth();//outerWidth(true); doesn't work good on ie9 :|
 			});
 			
 			var css = {};
 			
 			switch(settings.type) {
 				case 'padding':
-					var padding = Math.floor(((($(this).outerWidth(true))-elementsWidth)/elements.size())/2);
+					var padding = Math.floor(((($(this).outerWidth())-elementsWidth)/elements.size())/2);
 					elements.each(function(){
 						$(this).css({
 							'padding-right'		:		padding, 
