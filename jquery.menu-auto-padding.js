@@ -21,7 +21,11 @@
 			 * if you need some king of graphic separator between every element
 			 * you have to insert his width here
 			 */
-			separatorWidth			:	0
+			separatorWidth			:	0,
+			/**
+			 * space of the container wich will not be calculated as free space
+			 */
+			containerBorder			:	0
 		};
 		if(options) $.extend(settings,options);
 		return this.each(function(){
@@ -36,7 +40,7 @@
 			
 			switch(settings.type) {
 				case 'padding':
-					var padding = Math.floor(((($(this).outerWidth())-elementsWidth)/elements.size())/2);
+					var padding = Math.floor(((($(this).outerWidth()-settings.containerBorder)-elementsWidth)/elements.size())/2);
 					elements.each(function(){
 						$(this).css({
 							'padding-right'		:		padding, 
@@ -47,7 +51,7 @@
 				
 				//TODO: need some test here
 				case 'left':
-					var delta = Math.floor(((($(this).outerWidth(true))-elementsWidth)/elements.size()));
+					var delta = Math.floor(((($(this).outerWidth(true)-settings.containerBorder)-elementsWidth)/elements.size()));
 					var pointer = 0;
 					elements.each(function(index){
 						$(this).css({
@@ -58,7 +62,7 @@
 				break;
 					
 				case 'width left':
-					var delta = Math.floor(((($(this).outerWidth(true))-elementsWidth)/elements.size()))-Math.floor(settings.separatorWidth/elements.size());
+					var delta = Math.floor(((($(this).outerWidth(true)-settings.containerBorder)-elementsWidth)/elements.size()))-Math.floor(settings.separatorWidth/elements.size());
 					var pointer = 0;
 					elements.each(function(index){
 						pointer = pointer+$(this).outerWidth(true);
