@@ -41,10 +41,24 @@
 			switch(settings.type) {
 				case 'padding':
 					var padding = Math.floor(((($(this).outerWidth()-settings.containerBorder)-elementsWidth)/elements.size())/2);
-					elements.each(function(){
+					var total_padding = padding*2*elements.size();
+					var delta = $(this).outerWidth()-settings.containerBorder-elementsWidth-total_padding;
+					var deltaLeft = Math.floor(delta/2);
+					var deltaRight = Math.floor(delta/2);
+					if (delta %2 == 1)  {
+						deltaRight = deltaRight+1;
+					}
+					elements.each(function(key, value){
+						var paddingLeft		= padding;
+						var paddingRight	= padding;
+						if(key == 0 ){
+							paddingLeft		=  padding+deltaLeft;
+						} else if (key == elements.size()-1) {
+							paddingRight	=  padding+deltaRight;
+						}
 						$(this).css({
-							'padding-right'		:		padding, 
-							'padding-left'		:		padding
+							'padding-right'		:		paddingLeft, 
+							'padding-left'		:		paddingRight
 						});
 					});
 				break;
