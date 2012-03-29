@@ -4,6 +4,7 @@
 	 * according to the maximum width of the parent divided by
 	 * the number of children. Tipically used to dynamically
 	 * center an orizontal menu.
+	 * @version 1.0_r9
 	 */
   $.fn.autopadding = function(options) {
 		var settings = {
@@ -16,7 +17,7 @@
 			 * padding = applyes a padding-right:x and padding-left:x to every element
 			 * width left = apply a dynamic width to every element
 			 */
-			type								:	'padding',
+			type					:	'padding',
 			/**
 			 * if you need some king of graphic separator between every element
 			 * you have to insert his width here
@@ -38,28 +39,31 @@
 			
 			var css = {};
 			
+			function gcd(x, y) {
+				while (y != 0) {
+					var z = x % y;
+					x = y;
+					y = z;
+				}
+				return x;
+			}
+			
 			switch(settings.type) {
-				case 'padding':
-					var padding = Math.floor(((($(this).outerWidth()-settings.containerBorder)-elementsWidth)/elements.size())/2);
+				case 'padding': 
+					var container_space = $(this).outerWidth();
+					var free_space = container_space-settings.containerBorder-elementsWidth;
+					var padding = Math.floor((free_space/elements.size())/2.0);
 					var total_padding = padding*2*elements.size();
-					var delta = $(this).outerWidth()-settings.containerBorder-elementsWidth-total_padding;
-					var deltaLeft = Math.floor(delta/2);
-					var deltaRight = Math.floor(delta/2);
-					if (delta %2 == 1)  {
-						deltaRight = deltaRight+1;
-					}
+					var delta = free_space-total_padding;
+
 					elements.each(function(key, value){
-						var paddingLeft		= padding;
+						var paddingLeft		= padding+(((--delta)>1)?1:0);
 						var paddingRight	= padding;
-						if(key == 0 ){
-							paddingLeft		=  padding+deltaLeft;
-						} else if (key == elements.size()-1) {
-							paddingRight	=  padding+deltaRight;
-						}
 						$(this).css({
 							'padding-right'		:		paddingLeft, 
 							'padding-left'		:		paddingRight
 						});
+						console.log(delta);
 					});
 				break;
 				
