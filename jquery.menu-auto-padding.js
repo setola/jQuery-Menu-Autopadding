@@ -54,7 +54,6 @@
 							'padding-right'		:		paddingLeft, 
 							'padding-left'		:		paddingRight
 						});
-						console.log(delta);
 					});
 				break;
 				
