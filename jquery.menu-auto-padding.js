@@ -39,15 +39,6 @@
 			
 			var css = {};
 			
-			function gcd(x, y) {
-				while (y != 0) {
-					var z = x % y;
-					x = y;
-					y = z;
-				}
-				return x;
-			}
-			
 			switch(settings.type) {
 				case 'padding': 
 					var container_space = $(this).outerWidth();
