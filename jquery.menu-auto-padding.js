@@ -19,6 +19,14 @@
 			 */
 			type					:	'padding',
 			/**
+			 * Set to true if you want to align first element to the container
+			 */
+			alignFirst				:	false,
+			/**
+			 * Set to true if you want to align last element to the container
+			 */
+			alignLast				:	false,
+			/**
 			 * if you need some king of graphic separator between every element
 			 * you have to insert his width here
 			 */
@@ -75,14 +83,25 @@
 				case 'padding': 
 					var container_space = $(this).outerWidth();
 					var free_space = container_space-me.settings.containerBorder-elementsWidth;
-					var padding = Math.floor((free_space/elements.size())/2.0);
+					var tmp_padding =(free_space/elements.size())/2.0;
+					
+					if(me.settings.alignFirst){
+						free_space += tmp_padding;
+					}
+					if(me.settings.alignLast){
+						free_space += tmp_padding;
+					}
+					
+					padding = Math.floor((free_space/elements.size())/2.0);
+					
 					var total_padding = padding*2*elements.size();
 					var delta = free_space-total_padding;
+					
 
 					elements.each(function(key, value){
 						var data = {
-							paddingLeft		:	padding+(((--delta)>1)?1:0),
-							paddingRight	:	padding
+							paddingRight	:	(key==0 && me.settings.alignFirst) ? 0 : padding+(((--delta)>1)?1:0),
+							paddingLeft		:	(key==elements.size()-1 && me.settings.alignLast) ? 0 : padding
 						};
 						if(jQuery.isFunction(me.settings.onSingleElement)){
 							me.settings.onSingleElement.call(me,data,value);
