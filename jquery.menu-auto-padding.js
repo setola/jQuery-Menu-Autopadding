@@ -64,7 +64,6 @@
 		var me = this;
 		return this.each(function(){
 			var that = $(this);
-			console.log(this);
 			var elements = that.find(me.settings.elementsSelector);
 			var elementsWidth = 0;
 			
